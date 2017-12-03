@@ -9,8 +9,7 @@ export default class SearchInput extends Component {
 
 	handleSearchChange(event) {
 		event.preventDefault();
-		console.log('new search: ', event.target.value);
-		this.props.onSearchValueChanged(event.target.value);
+		this.props.onSearchChanged(event.target.value);
 	}
 
 	render() {
@@ -20,7 +19,7 @@ export default class SearchInput extends Component {
 							 placeholder="Search an artist..."
 							 type="text"
 							 className="search-input"
-							 value={this.props.searchValue}
+							 value={this.props.search}
 							 onChange={this.handleSearchChange}
 				/>
 			</div>
