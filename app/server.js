@@ -32,6 +32,21 @@ app.get('/get_token', function (req, res) {
 	});
 });
 
+app.get('/artist/:id', function (req, res) {
+
+	const authOptions = {
+		url: 'https://api.spotify.com/v1/artists/' + req.params.id + '/albums?market=CA&album_type=album',
+		headers: {'Authorization': 'Bearer ' + token},
+		json: true
+	};
+
+	request.get(authOptions, (error, response, body) => {
+		if (!error && response.statusCode === 200) {
+			res.send(body);
+		}
+	});
+});
+
 app.post('/search', function (req, res) {
 
 	let search = req.body.search,
@@ -43,11 +58,11 @@ app.post('/search', function (req, res) {
 		json: true
 	};
 
-	request.get(authOptions, function (error, response, body) {
+	request.get(authOptions, (error, response, body) => {
 		if (!error && response.statusCode === 200) {
 			res.send(body);
 		}
-	}, function (error) {
+	}, (error) => {
 		console.log(error);
 	});
 });
