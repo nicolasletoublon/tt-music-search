@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import './style.scss';
 import moment from 'moment';
+import Rating from "../Rating";
 
 export default class AlbumTile extends Component {
 
@@ -46,7 +47,7 @@ export default class AlbumTile extends Component {
 					<p className="name">{album.name}</p>
 					{album.genres.length ? this.getGenres(album.genres) : null}
 					<div className="pop-date-container">
-						<p className="popularity">{album.popularity}</p>
+						<Rating popularity={album.popularity}></Rating>
 						<p className="releaseDate">{releaseDate}</p>
 					</div>
 					{this.state.isTracksVisible ? this.getTracks(album.tracks.items) : null}
