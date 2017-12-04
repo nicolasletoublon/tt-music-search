@@ -1,11 +1,15 @@
-const path = require('path');
+var path = require('path');
+var BUILD_DIR = path.resolve(__dirname, 'dist');
+var APP_DIR = path.resolve(__dirname, 'app');
 
-module.exports = {
-	devtool: 'source-map',
-	entry: './app/index.js',
+var config = {
+	entry: APP_DIR,
 	output: {
-		filename: 'bundle.js',
-		path: path.resolve(__dirname, 'dist')
+		path: BUILD_DIR,
+		filename: 'bundle.js'
+	},
+	resolve: {
+		extensions: ['.js', '.jsx','.json']
 	},
 	module: {
 		loaders: [
@@ -20,9 +24,7 @@ module.exports = {
 				loaders: ['style-loader', 'css-loader', 'sass-loader']
 			}
 		]
-	},
-	devServer: {
-		contentBase: path.join(__dirname, "dist"),
-		port: 3000
 	}
 };
+
+module.exports = config;
