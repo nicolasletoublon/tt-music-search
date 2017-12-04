@@ -1,9 +1,8 @@
 import React, {Component} from "react";
-import SearchInput from "../../common/SearchInput/index.jsx";
-import ItemList from "../../common/ItemList/index.jsx";
-import Link from "react-router-dom/es/Link";
+import SearchInput from "../SearchInput";
+import ArtistTile from "../ArtistTile";
 
-export default class Browse extends Component {
+export default class Home extends Component {
 	constructor(props) {
 		super(props);
 		this.handleSearchChanged = this.handleSearchChanged.bind(this);
@@ -26,7 +25,7 @@ export default class Browse extends Component {
 			})
 		};
 
-		fetch('http://localhost:8888/search', options)
+		fetch('/api/search', options)
 			.then(response => {
 				return response.json();
 			}).then(result => {
@@ -36,20 +35,18 @@ export default class Browse extends Component {
 
 	render() {
 		const artists = this.state.artists;
-		const artistList = artists.map((artist) => {
-			return <li key={artist.id}>
-				<Link to={{pathname: `artist/${artist.id}`, state: { artist: artist }}}>{artist.name}</Link>
-			</li>
+		const artistTileList = artists.map((artist) => {
+			return <ArtistTile key={artist.id} artist={artist}> </ArtistTile>
 		});
 
 		return (
-			<div>
-				<SearchInput searchValue={this.state.search}
+			<div className="home-container">
+				<SearchInput search={this.state.search}
 										 onSearchChanged={this.handleSearchChanged}>
 				</SearchInput>
-				<ItemList items={this.state.artists}>
-					{artistList}
-				</ItemList>
+				<div className="artist-list item-list">
+					{artistTileList}
+				</div>
 			</div>
 		);
 	}

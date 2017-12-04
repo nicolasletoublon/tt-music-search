@@ -101,7 +101,6 @@ function handleAlbums(req, res) {
 }
 
 function handleDefault(req, res) {
-	//res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
 	res.redirect('/');
 }
 
