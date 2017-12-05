@@ -1,5 +1,9 @@
 @import "variables";
 
+body {
+  margin: 0;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -7,33 +11,29 @@
 html {
   font-family: 'Roboto', sans-serif;
 }
-
-.header {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.content-header {
-  padding: 5px;
-}
-
-.content-title {
-  font-variant: all-small-caps;
-  font-size: $font-bigger;
+.no-margin {
   margin: 0;
 }
 
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .item-list {
+  padding-top: 20px;
   display: flex;
   flex-wrap: wrap;
   align-items: left;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .tile-container {
   width: 23%;
   margin: 5px;
+  padding: 3px;
   float: left;
   display: flex;
   border: 1px solid #f0f0f0;
@@ -41,7 +41,7 @@ html {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1015px) {
     width: 31%;
   }
 
@@ -55,6 +55,7 @@ html {
 
   .picture-container {
     flex: 1;
+    border-radius: 2px;
     background-size: cover;
   }
 

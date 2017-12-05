@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import SearchInput from "../SearchInput";
 import ArtistTile from "../ArtistTile";
+import {Layout} from "../Layout/index";
 
 export default class Home extends Component {
 	constructor(props) {
@@ -29,7 +30,7 @@ export default class Home extends Component {
 			.then(response => {
 				return response.json();
 			}).then(result => {
-			this.setState({artists: result.artists.items})
+			this.setState({artists: result.artists})
 		});
 	}
 
@@ -40,14 +41,14 @@ export default class Home extends Component {
 		});
 
 		return (
-			<div className="home-container">
+			<Layout title="Search an artist">
 				<SearchInput search={this.state.search}
 										 onSearchChanged={this.handleSearchChanged}>
 				</SearchInput>
 				<div className="artist-list item-list">
 					{artistTileList}
 				</div>
-			</div>
+			</Layout>
 		);
 	}
 }

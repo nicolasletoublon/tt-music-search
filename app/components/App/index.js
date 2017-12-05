@@ -1,23 +1,24 @@
 import React, {Component} from "react";
 import '../../assets/styles/common.scss';
+import './style.scss';
 import Home from "../Home";
 import {Route, NavLink} from "react-router-dom";
 import NewReleases from "../NewReleases";
 import Artist from "../Artist";
-import {RaisedButton} from "material-ui";
+import {FlatButton} from "material-ui";
+
 export default class App extends Component {
 
 	constructor(props) {
 		super(props);
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		fetch('/api/get_token')
-			.then(response => {
-				return response.json();
-			}).then(result => {
-			console.log(result.access_token);
-		});
+			.then(response => response.json())
+			.then(result => {
+				console.log('Logged in');
+			});
 	}
 
 
@@ -26,21 +27,22 @@ export default class App extends Component {
 
 		return (
 			<div>
-				<div className="header">
+				<header className="header">
 					<NavLink to="/">
-						<RaisedButton label="Browse artists" style={style}>
-						</RaisedButton>
+						<FlatButton label="Search artists" style={style}>
+						</FlatButton>
 					</NavLink>
-					<NavLink to="/releases">
-						<RaisedButton label="New releases" style={style} disabled={true}>
-						</RaisedButton>
+					<NavLink to="/releases" onClick={e => e.preventDefault()}>
+						<FlatButton label="New releases" style={style} disabled={true}>
+						</FlatButton>
 					</NavLink>
-				</div>
-				<div className="content">
+				</header>
+				<section className="content">
 					<Route exact path="/" component={Home}/>
 					<Route path="/artist/:id" component={Artist}/>
 					<Route path="/releases" component={NewReleases}/>
-				</div>
+				</section>
+				<footer className="footer"></footer>
 			</div>
 		);
 	}

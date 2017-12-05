@@ -45,7 +45,7 @@ function handleLoginApi(req, res) {
 }
 
 function handleSearch(req, res) {
-	let search = req.body.search,
+	let search = req.body.search + '*',
 		type = req.body.type;
 
 	const authOptions = {
@@ -56,7 +56,9 @@ function handleSearch(req, res) {
 
 	request.get(authOptions, (error, response, body) => {
 		if (!error && response.statusCode === 200) {
-			res.send(body);
+			console.log(body)
+			let artistsWithoutDuplicate = _.uniqBy(body.artists.items, 'name');
+			res.send({artists: artistsWithoutDuplicate});
 		}
 	}, (error) => {
 		console.log(error);
@@ -101,7 +103,7 @@ function handleAlbums(req, res) {
 }
 
 function handleDefault(req, res) {
-	res.redirect('/');
+	res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
 }
 
 app.listen(port, function () {

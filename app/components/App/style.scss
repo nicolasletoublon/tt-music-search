@@ -1,0 +1,17 @@
+@import '../../assets/styles/variables';
+
+
+.header {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid $border-color;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+  a.active {
+    border-bottom: 2px inset black;
+  }
+}
+
+.content {
+  padding: 15px;
+}

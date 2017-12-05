@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {TextField} from "material-ui";
+import {FontIcon, TextField} from "material-ui";
 import './style.scss';
 
 export default class SearchInput extends Component {
@@ -15,17 +15,23 @@ export default class SearchInput extends Component {
 	}
 
 	render() {
+		const iconStyles = {
+			padding: '0 0 8px 15px',
+			color: '#b4b4b4'
+		};
+
 		return (
-			<div className="search-input-container content-header">
+			<div className="search-input-container">
 				<TextField
 					id="search-artist-input"
-					hintText="Search an artist"
+					hintText="Artist"
 					fullWidth={true}
-					floatingLabelText="Artist"
+					floatingLabelText="Search an artist"
 					className="search-input"
 					value={this.props.search}
 					onChange={this.handleSearchChange}
 				/>
+				<FontIcon className="material-icons search-icon" style={iconStyles}>search</FontIcon>
 			</div>
 		);
 	}

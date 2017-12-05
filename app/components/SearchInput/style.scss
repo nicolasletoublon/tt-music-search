@@ -1,3 +1,9 @@
 .search-input-container {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
 
+  .search-icon {
+    padding: 0 0 10px 0;
+  }
 }

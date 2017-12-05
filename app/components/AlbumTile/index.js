@@ -48,7 +48,7 @@ export default class AlbumTile extends Component {
 					{album.genres.length ? this.getGenres(album.genres) : null}
 					<div className="pop-date-container">
 						<Rating popularity={album.popularity}></Rating>
-						<p className="releaseDate">{releaseDate}</p>
+						<span className="releaseDate">{releaseDate}</span>
 					</div>
 					{this.state.isTracksVisible ? this.getTracks(album.tracks.items) : null}
 				</div>

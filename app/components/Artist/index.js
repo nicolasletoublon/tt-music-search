@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import AlbumTile from "../AlbumTile";
+import {Layout} from "../Layout/index";
 
 export default class Artist extends Component {
 	constructor(props) {
@@ -9,14 +10,12 @@ export default class Artist extends Component {
 		};
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		fetch(`/api/artist/${this.props.match.params.id}`)
-			.then(response => {
-				return response.json();
-			}).then(result => {
-			console.log(result);
-			this.setState({albums: result.albums})
-		});
+			.then(response => response.json())
+			.then(result => {
+				this.setState({albums: result.albums})
+			});
 	}
 
 	render() {
@@ -27,12 +26,11 @@ export default class Artist extends Component {
 		});
 
 		return (
-			<div>
-				<span className="content-header content-title">{artist.name}</span>
+			<Layout title= {'Albums by ' + artist.name}>
 				<div className="artist-list item-list">
 					{albumTileList}
 				</div>
-			</div>
+			</Layout>
 		);
 	}
 }
