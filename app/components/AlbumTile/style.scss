@@ -2,45 +2,4 @@
 
 .album-tile {
   flex-direction: column;
-
-  .picture-container {
-    min-height: 150px;
-    max-height: 150px;
-  }
-
-  .name {
-    text-align: center;
-  }
-
-  .pop-date-container {
-    display: flex;
-    justify-content: space-between;
-    color: $color-light;
-    font-size: $font-small;
-    align-items: center;
-  }
-
-  .genre-container {
-    display: flex;
-    flex-wrap: wrap;
-
-    .genre {
-      border: 1px solid grey;
-      border-radius: 1px;
-      margin: 2px;
-      padding: 2px;
-    }
-  }
-
-  .tracks-container {
-    border-top: 1px solid $color-light;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    .track {
-      font-size: $font-small;
-      color: $color-light;
-      margin-bottom: 3px;
-    }
-  }
 }

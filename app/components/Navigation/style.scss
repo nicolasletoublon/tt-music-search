@@ -1,0 +1,14 @@
+@import '../../assets/styles/variables';
+
+.navigation{
+  display: flex;
+
+  .nav-link {
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+    &.active {
+      border-bottom: 2px inset black;
+    }
+  }
+}

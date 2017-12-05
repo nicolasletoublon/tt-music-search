@@ -24,9 +24,8 @@ export default class SearchInput extends Component {
 			<div className="search-input-container">
 				<TextField
 					id="search-artist-input"
-					hintText="Artist"
+					hintText="Search an artist here..."
 					fullWidth={true}
-					floatingLabelText="Search an artist"
 					className="search-input"
 					value={this.props.search}
 					onChange={this.handleSearchChange}

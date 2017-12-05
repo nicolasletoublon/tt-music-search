@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import './style.scss';
 
-export class Layout extends Component {
+export default class Layout extends Component {
 	constructor(props) {
 		super(props);
 	}

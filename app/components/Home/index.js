@@ -1,7 +1,9 @@
 import React, {Component} from "react";
 import SearchInput from "../SearchInput";
 import ArtistTile from "../ArtistTile";
-import {Layout} from "../Layout/index";
+import Layout from "../Layout";
+import {CircularProgress} from "material-ui";
+import * as _ from "lodash";
 
 export default class Home extends Component {
 	constructor(props) {
@@ -9,12 +11,19 @@ export default class Home extends Component {
 		this.handleSearchChanged = this.handleSearchChanged.bind(this);
 		this.state = {
 			search: '',
-			artists: []
+			artists: [],
+			isLoading: false
 		};
 	}
 
 	handleSearchChanged(search) {
-		this.setState({search: search});
+		if(search === '' || search === ' ') {
+			this.setState({search: ''});
+			return;
+		}
+
+		this.setState({search: search, isLoading: true, artists: []});
+
 		let options = {
 			headers: {
 				'Content-Type': 'application/json'
@@ -30,7 +39,7 @@ export default class Home extends Component {
 			.then(response => {
 				return response.json();
 			}).then(result => {
-			this.setState({artists: result.artists})
+			this.setState({artists: result.artists, isLoading: false})
 		});
 	}
 
@@ -46,6 +55,7 @@ export default class Home extends Component {
 										 onSearchChanged={this.handleSearchChanged}>
 				</SearchInput>
 				<div className="artist-list item-list">
+					{this.state.isLoading ? <CircularProgress size={50} thickness={4}/> : null}
 					{artistTileList}
 				</div>
 			</Layout>

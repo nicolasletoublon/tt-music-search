@@ -21,6 +21,7 @@ app.use(bodyParser.json());
 app.get('/api/get_token', handleLoginApi);
 app.post('/api/search', handleSearch);
 app.get('/api/artist/:id', handleAlbums);
+app.get('/api/releases', handleReleases);
 app.get('*', handleDefault);
 
 function handleLoginApi(req, res) {
@@ -56,9 +57,10 @@ function handleSearch(req, res) {
 
 	request.get(authOptions, (error, response, body) => {
 		if (!error && response.statusCode === 200) {
-			console.log(body)
 			let artistsWithoutDuplicate = _.uniqBy(body.artists.items, 'name');
 			res.send({artists: artistsWithoutDuplicate});
+		} else {
+			console.log(response.statusCode);
 		}
 	}, (error) => {
 		console.log(error);
@@ -66,39 +68,80 @@ function handleSearch(req, res) {
 }
 
 function handleAlbums(req, res) {
+
 	const authOptions = {
-		url: 'https://api.spotify.com/v1/artists/' + req.params.id + '/albums?market=CA&album_type=album',
+		url: 'https://api.spotify.com/v1/artists/' + req.params.id + '/albums?album_type=album',
 		headers: {'Authorization': 'Bearer ' + token},
 		json: true
 	};
 
 	request.get(authOptions, (error, response, body) => {
 		if (!error && response.statusCode === 200) {
+
 			let albumsIds = body.items.map((album) => {
 				return album.id;
 			});
 
-			let queryParam = [...albumsIds].join(',');
-			const authOptions = {
-				url: 'https://api.spotify.com/v1/albums?market=CA&ids=' + queryParam,
-				headers: {'Authorization': 'Bearer ' + token},
-				json: true
-			};
-
-			return request.get(authOptions, (error, response, body) => {
-				if (!error && response.statusCode === 200) {
-					let albumsWithoutDuplicates = _.uniqBy(body.albums, 'name').sort((a, b) => {
-						return (a.release_date < b.release_date) ? 1 : -1;
-					});
-
-					res.send({albums: albumsWithoutDuplicates});
-				}
-			}, (error) => {
-				console.log(error);
+			getAlbums(albumsIds).then(function(albums) {
+				res.send({albums: albums});
 			});
+
+		} else {
+			res.send({albums: []});
 		}
 	}, (error) => {
 		console.log(error);
+	});
+}
+
+function handleReleases(req, res) {
+	const authOptions = {
+		url: 'https://api.spotify.com/v1/browse/new-releases',
+		headers: {'Authorization': 'Bearer ' + token},
+		json: true
+	};
+
+	request.get(authOptions, (error, response, body) => {
+		if (!error && response.statusCode === 200) {
+
+			let albumsIds = body.albums.items.map((album) => {
+				return album.id;
+			});
+
+			getAlbums(albumsIds).then(function(albums) {
+				res.send({albums: albums});
+			});
+
+		} else {
+			res.send({albums: []});
+		}
+	}, (error) => {
+		console.log(error);
+	});
+}
+
+function getAlbums(albumsIds) {
+	let queryParam = [...albumsIds].join(',');
+	const authOptions = {
+		url: 'https://api.spotify.com/v1/albums?market=CA&ids=' + queryParam,
+		headers: {'Authorization': 'Bearer ' + token},
+		json: true
+	};
+
+	return new Promise(function (resolve, reject) {
+		request.get(authOptions, (error, response, body) => {
+			if (!error && response.statusCode === 200) {
+				let uniquesAlbums = _.uniqBy(body.albums, 'name').sort((a, b) => {
+					return (a.release_date < b.release_date) ? 1 : -1;
+				});
+
+				resolve(uniquesAlbums)
+			} else {
+				resolve([])
+			}
+		}, (error) => {
+			return reject(error)
+		});
 	});
 }
 
