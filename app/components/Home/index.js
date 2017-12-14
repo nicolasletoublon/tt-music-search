@@ -3,9 +3,9 @@ import SearchInput from "../SearchInput";
 import ArtistTile from "../ArtistTile";
 import Layout from "../Layout";
 import {CircularProgress} from "material-ui";
-import * as _ from "lodash";
+import {connect} from 'react-redux';
 
-export default class Home extends Component {
+class Home extends Component {
 	constructor(props) {
 		super(props);
 		this.handleSearchChanged = this.handleSearchChanged.bind(this);
@@ -51,8 +51,7 @@ export default class Home extends Component {
 
 		return (
 			<Layout title="Search an artist">
-				<SearchInput search={this.state.search}
-										 onSearchChanged={this.handleSearchChanged}>
+				<SearchInput>
 				</SearchInput>
 				<div className="artist-list item-list">
 					{this.state.isLoading ? <CircularProgress size={50} thickness={4}/> : null}
@@ -62,3 +61,11 @@ export default class Home extends Component {
 		);
 	}
 }
+
+function mapStateToProps(state) {
+	return ({
+		search: state.search
+	});
+}
+
+export default connect(mapStateToProps)(Home);

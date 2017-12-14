@@ -9,7 +9,7 @@ import _ from 'lodash';
 
 const app = express();
 
-const port = 3000;
+const port = 3001;
 const client_id = '8c5b28bf383947b59ef6dfea70c1b635';
 const client_secret = '99d72f00c78f46e497038c27cd40d2f5';
 let token = '';

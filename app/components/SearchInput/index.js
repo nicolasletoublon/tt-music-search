@@ -1,8 +1,10 @@
 import React, {Component} from "react";
 import {FontIcon, TextField} from "material-ui";
 import './style.scss';
+import {setSearch} from '../../actions/search';
+import {connect} from 'react-redux';
 
-export default class SearchInput extends Component {
+class SearchInput extends Component {
 
 	constructor(props) {
 		super(props);
@@ -10,8 +12,9 @@ export default class SearchInput extends Component {
 	}
 
 	handleSearchChange(event) {
-		event.preventDefault();
-		this.props.onSearchChanged(event.target.value);
+		//event.preventDefault();
+		this.props.dispatch(setSearch(event.target.value))
+		//this.props.onSearchChanged(event.target.value);
 	}
 
 	render() {
@@ -27,7 +30,6 @@ export default class SearchInput extends Component {
 					hintText="Search an artist here..."
 					fullWidth={true}
 					className="search-input"
-					value={this.props.search}
 					onChange={this.handleSearchChange}
 				/>
 				<FontIcon className="material-icons search-icon" style={iconStyles}>search</FontIcon>
@@ -35,3 +37,11 @@ export default class SearchInput extends Component {
 		);
 	}
 }
+
+function mapStateToProps(state) {
+	return ({
+		search: state.search
+	});
+}
+
+export default connect(mapStateToProps)(SearchInput);

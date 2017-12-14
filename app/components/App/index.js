@@ -5,8 +5,9 @@ import {Route} from "react-router-dom";
 import NewReleases from "../NewReleases";
 import Artist from "../Artist";
 import Navigation from "../Navigation";
+import {connect} from 'react-redux';
 
-export default class App extends Component {
+class App extends Component {
 
 	constructor(props) {
 		super(props);
@@ -41,3 +42,5 @@ export default class App extends Component {
 		);
 	}
 }
+
+export default connect(state => state)(App);
